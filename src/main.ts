@@ -5,24 +5,23 @@ import {
   serviceClients,
   Session,
   waitForOperation,
-  WrappedServiceClientType,
+  type WrappedServiceClientType,
 } from '@yandex-cloud/nodejs-sdk';
-
-import {InstanceGroup} from '@yandex-cloud/nodejs-sdk/dist/generated/yandex/cloud/compute/v1/instancegroup/instance_group';
+import { InstanceGroup } from '@yandex-cloud/nodejs-sdk/dist/generated/yandex/cloud/compute/v1/instancegroup/instance_group';
 import {
   CreateInstanceGroupFromYamlRequest,
-  InstanceGroupServiceService,
+  type InstanceGroupServiceService,
   ListInstanceGroupsRequest,
   UpdateInstanceGroupFromYamlRequest,
 } from '@yandex-cloud/nodejs-sdk/dist/generated/yandex/cloud/compute/v1/instancegroup/instance_group_service';
-import {Operation} from '@yandex-cloud/nodejs-sdk/dist/generated/yandex/cloud/operation/operation';
-import {ServiceEndpointResolver} from '@yandex-cloud/nodejs-sdk/dist/service-endpoints';
-import * as fs from 'fs';
+import type { Operation } from '@yandex-cloud/nodejs-sdk/dist/generated/yandex/cloud/operation/operation';
+import { ServiceEndpointResolver } from '@yandex-cloud/nodejs-sdk/dist/service-endpoints';
+import * as fs from 'node:fs';
 import Mustache from 'mustache';
-import * as path from 'path';
+import * as path from 'node:path';
 import YAML from 'yaml';
-import {fromServiceAccountJsonFile} from './service-account-json';
-import {serviceMapByEndpoint} from './service-endpoints';
+import { fromServiceAccountJsonFile } from './service-account-json';
+import { serviceMapByEndpoint } from './service-endpoints';
 
 // Partial interface with only fields used in the action.
 interface InstanceGroupSpec {
@@ -65,17 +64,20 @@ interface ActionConfig {
 }
 
 function prepareConfig(filePath: string): string {
-  const workspace = process.env['GITHUB_WORKSPACE'] ?? '';
+  const workspace = process.env.GITHUB_WORKSPACE ?? '';
   const content = fs.readFileSync(path.join(workspace, filePath)).toString();
 
-  return Mustache.render(content, {env: {...process.env}}, {}, {escape: x => x});
+  return Mustache.render(content, { env: { ...process.env } }, {}, { escape: (x) => x });
 }
 
-function prepareIgSpec(filePath: string, metadata: {userData: string; dockerCompose: string}): InstanceGroupSpec {
-  const workspace = process.env['GITHUB_WORKSPACE'] ?? '';
+function prepareIgSpec(
+  filePath: string,
+  metadata: { userData: string; dockerCompose: string },
+): InstanceGroupSpec {
+  const workspace = process.env.GITHUB_WORKSPACE ?? '';
   const content = fs.readFileSync(path.join(workspace, filePath)).toString();
 
-  const rendered = Mustache.render(content, {env: {...process.env}}, {}, {escape: x => x});
+  const rendered = Mustache.render(content, { env: { ...process.env } }, {}, { escape: (x) => x });
 
   const spec = YAML.parse(rendered);
 
@@ -135,6 +137,7 @@ async function updateIg(
   core.startGroup('Update Instance Group');
 
   core.setOutput('created', 'false');
+  // biome-ignore lint/performance/noDelete: <explanation>
   delete instanceGroupSpec.folder_id;
   const updateSpec: InstanceGroupUpdateSpec = {
     instance_group_id: igId,
@@ -164,7 +167,7 @@ function parseInputs(): ActionConfig {
   const folderId: string = core.getInput('folder-id', {
     required: true,
   });
-  const igSpecPath: string = core.getInput('ig-spec-path', {required: true});
+  const igSpecPath: string = core.getInput('ig-spec-path', { required: true });
   const userDataPath: string = core.getInput('user-data-path', {
     required: true,
   });
@@ -186,9 +189,9 @@ function parseInputs(): ActionConfig {
   };
 }
 
-async function run(): Promise<void> {
+export async function run(): Promise<void> {
   try {
-    core.info(`start`);
+    core.info('start');
     const ycSaJsonCredentials = core.getInput('yc-sa-json-credentials', {
       required: true,
     });
@@ -202,17 +205,17 @@ async function run(): Promise<void> {
 
     const endpointMap = serviceMapByEndpoint(config.apiEndpoint);
     const resolver = new ServiceEndpointResolver(endpointMap);
-    const session = new Session({serviceAccountJson}, resolver);
+    const session = new Session({ serviceAccountJson }, resolver);
     const instanceGroupService = session.client(serviceClients.InstanceGroupServiceClient);
 
     const userData = prepareConfig(config.userDataPath);
     const dockerCompose = prepareConfig(config.dockerComposePath);
 
-    const spec = prepareIgSpec(config.igSpecPath, {userData, dockerCompose});
+    const spec = prepareIgSpec(config.igSpecPath, { userData, dockerCompose });
 
     spec.folder_id = config.folderId;
     if (!spec.description) {
-      const {repo} = github.context;
+      const { repo } = github.context;
       spec.description = `Created from: ${repo.owner}/${repo.repo}`;
     }
 
@@ -226,5 +229,3 @@ async function run(): Promise<void> {
     core.setFailed(error as Error);
   }
 }
-
-run();

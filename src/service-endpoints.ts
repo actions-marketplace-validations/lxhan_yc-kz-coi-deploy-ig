@@ -1,16 +1,19 @@
-import {DEFAULT_SERVICE_ENDPOINTS_MAP, ServiceEndpointsMap} from '@yandex-cloud/nodejs-sdk/dist/service-endpoints';
+import {
+  DEFAULT_SERVICE_ENDPOINTS_MAP,
+  type ServiceEndpointsMap,
+} from '@yandex-cloud/nodejs-sdk/dist/service-endpoints';
 
 export function serviceMapByEndpoint(endpoint: string): ServiceEndpointsMap {
   switch (endpoint) {
-    case 'api.cloudil.com': {
-      return NEBIUS_IL_SERVICE_ENDPOINTS_MAP as unknown as ServiceEndpointsMap;
+    case 'api.yandexcloud.kz': {
+      return KZ_SERVICE_ENDPOINTS_MAP as unknown as ServiceEndpointsMap;
     }
     default:
       return DEFAULT_SERVICE_ENDPOINTS_MAP;
   }
 }
 
-export const NEBIUS_IL_SERVICE_ENDPOINTS_MAP = {
+export const KZ_SERVICE_ENDPOINTS_MAP = {
   alb: {
     serviceIds: [
       'yandex.cloud.apploadbalancer.v1.BackendGroupService',
@@ -19,14 +22,14 @@ export const NEBIUS_IL_SERVICE_ENDPOINTS_MAP = {
       'yandex.cloud.apploadbalancer.v1.TargetGroupService',
       'yandex.cloud.apploadbalancer.v1.VirtualHostService',
     ],
-    endpoint: 'alb.api.cloudil.com:443',
+    endpoint: 'alb.api.yandexcloud.kz:443',
   },
   'certificate-manager': {
     serviceIds: [
       'yandex.cloud.certificatemanager.v1.CertificateContentService',
       'yandex.cloud.certificatemanager.v1.CertificateService',
     ],
-    endpoint: 'cpl.ycm.api.cloudil.com:443',
+    endpoint: 'cpl.ycm.api.yandexcloud.kz:443',
   },
   compute: {
     serviceIds: [
@@ -44,7 +47,7 @@ export const NEBIUS_IL_SERVICE_ENDPOINTS_MAP = {
       'yandex.cloud.compute.v1.instancegroup.InstanceGroupService',
       'yandex.cloud.compute.v1.SnapshotScheduleService',
     ],
-    endpoint: 'compute.api.cloudil.com:443',
+    endpoint: 'compute.api.yandexcloud.kz:443',
   },
   'container-registry': {
     serviceIds: [
@@ -54,7 +57,7 @@ export const NEBIUS_IL_SERVICE_ENDPOINTS_MAP = {
       'yandex.cloud.containerregistry.v1.RepositoryService',
       'yandex.cloud.containerregistry.v1.ScannerService',
     ],
-    endpoint: 'container-registry.api.cloudil.com:443',
+    endpoint: 'container-registry.api.yandexcloud.kz:443',
   },
   dataproc: {
     serviceIds: [
@@ -63,26 +66,29 @@ export const NEBIUS_IL_SERVICE_ENDPOINTS_MAP = {
       'yandex.cloud.dataproc.v1.ResourcePresetService',
       'yandex.cloud.dataproc.v1.SubclusterService',
     ],
-    endpoint: 'dataproc.api.cloudil.com:443',
+    endpoint: 'dataproc.api.yandexcloud.kz:443',
   },
   'dataproc-manager': {
     serviceIds: [
       'yandex.cloud.dataproc.manager.v1.JobService',
       'yandex.cloud.dataproc.manager.v1.DataprocManagerService',
     ],
-    endpoint: 'dataproc-manager.api.cloudil.com:443',
+    endpoint: 'dataproc-manager.api.yandexcloud.kz:443',
   },
   datatransfer: {
-    serviceIds: ['yandex.cloud.datatransfer.v1.EndpointService', 'yandex.cloud.datatransfer.v1.TransferService'],
-    endpoint: 'datatransfer.api.cloudil.com:443',
+    serviceIds: [
+      'yandex.cloud.datatransfer.v1.EndpointService',
+      'yandex.cloud.datatransfer.v1.TransferService',
+    ],
+    endpoint: 'datatransfer.api.yandexcloud.kz:443',
   },
   dns: {
     serviceIds: ['yandex.cloud.dns.v1.DnsZoneService'],
-    endpoint: 'dns.api.cloudil.com:443',
+    endpoint: 'dns.api.yandexcloud.kz:443',
   },
   endpoint: {
     serviceIds: ['yandex.cloud.endpoint.ApiEndpointService'],
-    endpoint: 'api.cloudil.com:443',
+    endpoint: 'api.yandexcloud.kz:443',
   },
   iam: {
     serviceIds: [
@@ -95,42 +101,42 @@ export const NEBIUS_IL_SERVICE_ENDPOINTS_MAP = {
       'yandex.cloud.iam.v1.YandexPassportUserAccountService',
       'yandex.cloud.iam.v1.awscompatibility.AccessKeyService',
     ],
-    endpoint: 'iam.api.cloudil.com:443',
+    endpoint: 'iam.api.yandexcloud.kz:443',
   },
   kms: {
     serviceIds: ['yandex.cloud.kms.v1.SymmetricKeyService'],
-    endpoint: 'cpl.kms.api.cloudil.com:443',
+    endpoint: 'cpl.kms.api.yandexcloud.kz:443',
   },
   'kms-crypto': {
     serviceIds: ['yandex.cloud.kms.v1.SymmetricCryptoService'],
-    endpoint: 'dpl.kms.api.cloudil.com:443',
+    endpoint: 'dpl.kms.api.yandexcloud.kz:443',
   },
   'load-balancer': {
     serviceIds: [
       'yandex.cloud.loadbalancer.v1.NetworkLoadBalancerService',
       'yandex.cloud.loadbalancer.v1.TargetGroupService',
     ],
-    endpoint: 'load-balancer.api.cloudil.com:443',
+    endpoint: 'load-balancer.api.yandexcloud.kz:443',
   },
   lockbox: {
     serviceIds: ['yandex.cloud.lockbox.v1.SecretService'],
-    endpoint: 'cpl.lockbox.api.cloudil.com:443',
+    endpoint: 'cpl.lockbox.api.yandexcloud.kz:443',
   },
   'lockbox-payload': {
     serviceIds: ['yandex.cloud.lockbox.v1.PayloadService'],
-    endpoint: 'dpl.lockbox.api.cloudil.com:443',
+    endpoint: 'dpl.lockbox.api.yandexcloud.kz:443',
   },
   'log-ingestion': {
     serviceIds: ['yandex.cloud.logging.v1.LogIngestionService'],
-    endpoint: 'ingester.logging.cloudil.com:443',
+    endpoint: 'ingester.logging.yandexcloud.kz:443',
   },
   'log-reading': {
     serviceIds: ['yandex.cloud.logging.v1.LogReadingService'],
-    endpoint: 'reader.logging.cloudil.com:443',
+    endpoint: 'reader.logging.yandexcloud.kz:443',
   },
   logging: {
     serviceIds: ['yandex.cloud.logging.v1.LogGroupService'],
-    endpoint: 'logging.api.cloudil.com:443',
+    endpoint: 'logging.api.yandexcloud.kz:443',
   },
   'managed-kubernetes': {
     serviceIds: [
@@ -138,7 +144,7 @@ export const NEBIUS_IL_SERVICE_ENDPOINTS_MAP = {
       'yandex.cloud.k8s.v1.NodeGroupService',
       'yandex.cloud.k8s.v1.VersionService',
     ],
-    endpoint: 'mks.api.cloudil.com:443',
+    endpoint: 'mks.api.yandexcloud.kz:443',
   },
   'mdb-redis': {
     serviceIds: [
@@ -188,11 +194,11 @@ export const NEBIUS_IL_SERVICE_ENDPOINTS_MAP = {
       'yandex.cloud.mdb.sqlserver.v1.ResourcePresetService',
       'yandex.cloud.mdb.sqlserver.v1.UserService',
     ],
-    endpoint: 'mdb.api.cloudil.com:443',
+    endpoint: 'mdb.api.yandexcloud.kz:443',
   },
   operation: {
     serviceIds: ['yandex.cloud.operation.OperationService'],
-    endpoint: 'operation.api.cloudil.com:443',
+    endpoint: 'operation.api.yandexcloud.kz:443',
   },
   organizationmanager: {
     serviceIds: [
@@ -202,15 +208,18 @@ export const NEBIUS_IL_SERVICE_ENDPOINTS_MAP = {
       'yandex.cloud.organizationmanager.v1.saml.FederationService',
       'yandex.cloud.organizationmanager.v1.GroupService',
     ],
-    endpoint: 'organization-manager.api.cloudil.com:443',
+    endpoint: 'organization-manager.api.yandexcloud.kz:443',
   },
   resourcemanager: {
-    serviceIds: ['yandex.cloud.resourcemanager.v1.CloudService', 'yandex.cloud.resourcemanager.v1.FolderService'],
-    endpoint: 'resource-manager.api.cloudil.com:443',
+    serviceIds: [
+      'yandex.cloud.resourcemanager.v1.CloudService',
+      'yandex.cloud.resourcemanager.v1.FolderService',
+    ],
+    endpoint: 'resource-manager.api.yandexcloud.kz:443',
   },
   'storage-api': {
     serviceIds: ['yandex.cloud.storage.v1.BucketService'],
-    endpoint: 'storage.api.cloudil.com:443',
+    endpoint: 'storage.api.yandexcloud.kz:443',
   },
   vpc: {
     serviceIds: [
@@ -221,7 +230,7 @@ export const NEBIUS_IL_SERVICE_ENDPOINTS_MAP = {
       'yandex.cloud.vpc.v1.SubnetService',
       'yandex.cloud.vpc.v1.GatewayService',
     ],
-    endpoint: 'vpc.api.cloudil.com:443',
+    endpoint: 'vpc.api.yandexcloud.kz:443',
   },
   ydb: {
     serviceIds: [
@@ -231,6 +240,6 @@ export const NEBIUS_IL_SERVICE_ENDPOINTS_MAP = {
       'yandex.cloud.ydb.v1.ResourcePresetService',
       'yandex.cloud.ydb.v1.StorageTypeService',
     ],
-    endpoint: 'ydb.api.cloudil.com:443',
+    endpoint: 'ydb.api.yandexcloud.kz:443',
   },
 };
