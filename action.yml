@@ -1,13 +1,13 @@
-name: 'YC Deploy Container to Instance Group'
-description: 'GitHub Action to deploy container to Instance group in Yandex Cloud'
-author: 'Nikolay Matrosov'
+name: "YC KZ Deploy Container to Instance Group"
+description: "GitHub Action to deploy container to Instance group in Yandex Cloud"
+author: "Nikolay Matrosov"
 inputs:
   yc-sa-json-credentials:
     required: true
-    description: 'Json containing authorized key for Service Account. More info https://cloud.yandex.ru/docs/container-registry/operations/authentication#sa-json'
+    description: "Json containing authorized key for Service Account. More info https://cloud.yandex.ru/docs/container-registry/operations/authentication#sa-json"
   folder-id:
     required: true
-    description: 'Folder ID'
+    description: "Folder ID"
   ig-spec-path:
     required: true
     description: >-
@@ -16,21 +16,21 @@ inputs:
       https://github.com/yandex-cloud/cloudapi/blob/master/yandex/cloud/compute/v1/instancegroup/instance_group_service.proto#L219
   user-data-path:
     required: true
-    description: 'Path to the `user-data.yaml` file inside repo.'
+    description: "Path to the `user-data.yaml` file inside repo."
   docker-compose-path:
     required: true
-    description: 'Path to the `docker-compose.yaml` file inside repo.'
+    description: "Path to the `docker-compose.yaml` file inside repo."
   api-endpoint:
     required: false
-    description: 'Cloud API endpoint'
+    description: "Cloud API endpoint"
 outputs:
   instance-group-id:
-    description: 'Instance Group ID'
+    description: "Instance Group ID"
   created:
-    description: 'A flag that indicates whether instance was created or updated'
+    description: "A flag that indicates whether instance was created or updated"
 branding:
   color: blue
   icon: upload-cloud
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: "node20"
+  main: "dist/index.js"
